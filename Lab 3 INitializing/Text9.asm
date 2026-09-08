@@ -1,12 +1,17 @@
 INCLUDE Irvine32.inc
 
 .data
-buffer BYTE 100 DUP(?)                                
-msg    BYTE "COMPUTER ORGANIZATION & ASSEMBLY LANGUAGE LAB", 0 
 
+    msg BYTE 100 DUP(?)
+    tempStr BYTE " COMPUTER ORGANIZATION & ASSEMBLY LANGUAGE LAB", 0
 .code
 main PROC
-    call DumpRegs                                      
-    exit                                              
+    mov esi, OFFSET tempStr  
+    mov edi, OFFSET msg       
+    call Str_copy             
+    mov edx, OFFSET msg
+    call WriteString
+    call Crlf
+    exit
 main ENDP
 END main
