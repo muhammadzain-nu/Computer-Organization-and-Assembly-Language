@@ -1,0 +1,140 @@
+MOV: to move the value from source to destination
+Add: to add value from source to destination
+Sub: to sub "                "
+INC: adds 1
+DEC: subtracts 1
+MOVZX: moves unsigned smaller registers into Large registers
+MOVSX: moves signed smaller register into Large registers
+XCHG: Swaps the value
+NEG: Takes 2's compliment of the value.
+Equal Sign: assigns the value 
+
+
+
+
+.data
+oneByte BYTE 78h
+oneWord WORD 1234h
+oneDword DWORD 12345678h
+.code
+Mov eax, 0 ; EAX = 00000000h
+Mov al, oneByte ; EAX = 00000078h
+Mov ax, oneWord ; EAX = 00001234h
+Mov eax, oneDword ; EAX = 12345678h
+Mov ax, 0 ; EAX = 12340000h
+
+INCLUDE Irvine32.inc
+
+.data
+    val BYTE 7FH
+.code
+main PROC
+MOVZX eax, val
+    call DumpRegs
+    exit
+main ENDP
+END main
+INCLUDE Irvine32.inc
+
+.data
+    val SBYTE -5
+.code
+main PROC
+MOVSX eax, val
+    call DumpRegs
+    exit
+main ENDP
+END main
+INCLUDE Irvine32.inc
+
+.data
+    num DWORD 12
+.code
+main PROC
+MOV eax, num
+DEC eax
+    call DumpRegs
+    exit
+main ENDP
+END main
+INCLUDE Irvine32.inc
+
+.data
+    num1 DWORD 10
+    num2 Dword 20
+.code
+main PROC
+MOV eax, num1
+mov ebx, num2
+xchg eax, ebx
+    call DumpRegs
+    exit
+main ENDP
+END main
+INCLUDE Irvine32.inc
+
+.data
+    val Sword 25 ;\\0000 0000 0001 1001
+.code
+main PROC
+mov EAX, 0
+MOV ax, val
+Neg ax ;1111(F) 1111(F) 1110(E) 1011(7)
+    call DumpRegs
+    exit
+main ENDP
+END main
+INCLUDE Irvine32.inc
+
+.data
+COUNT = 500
+COunt = 600
+.code
+main PROC
+mov EAX, COUNT; replaces
+mov ebx, 500; same effect
+
+    call DumpRegs
+    exit
+main ENDP
+END main
+INCLUDE Irvine32.inc
+
+.data
+matrix Equ 10*10
+m1 word matrix
+.code
+main PROC
+mov eax, 0
+mov ax, m1
+    call DumpRegs
+    exit
+main ENDP
+END main
+INCLUDE Irvine32.inc
+
+.data
+matrix2 equ <10*10>
+M2 WORD matrix
+.code
+main PROC
+mov eax, 0
+mov ax, M2
+    call DumpRegs
+    exit
+main ENDP
+END main
+INCLUDE Irvine32.inc
+
+.data
+V1 equ 25
+V2 equ V1
+num Word V2
+.code
+main PROC
+mov eax, 0
+mov ax, num
+    call DumpRegs
+    exit
+main ENDP
+END main

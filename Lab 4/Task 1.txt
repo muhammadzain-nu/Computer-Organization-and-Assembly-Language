@@ -1,0 +1,16 @@
+INCLUDE Irvine32.inc
+
+.data
+mark1 dword 55
+mark2 dword 65
+.code
+main PROC
+mov eax, 0
+mov eax, mark2
+add eax, mark1; total value
+mov ebx, mark2
+sub ebx, mark1
+    call DumpRegs
+    exit
+main ENDP
+END main
