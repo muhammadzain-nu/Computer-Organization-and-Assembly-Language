@@ -1,0 +1,20 @@
+INCLUDE Irvine32.inc
+.data
+Bookprice equ 150
+qty equ 5
+Discount equ 100
+CashPaid equ 1000
+
+Subtotal equ (Bookprice * qty)
+Finalbill equ (Subtotal - Discount)
+Change equ (CashPaid - Finalbill)
+
+.code
+main PROC
+mov eax, Subtotal
+mov ebx, Finalbill
+mov edx, Change
+call DumpRegs
+exit
+main ENDP
+END main
