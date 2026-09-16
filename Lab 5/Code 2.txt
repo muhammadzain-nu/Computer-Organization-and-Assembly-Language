@@ -1,0 +1,41 @@
+Include Irvine32.inc
+.data
+arr BYTE 15, 3, 22, 7, 9, 12
+n = LENGTHOF arr
+
+.code
+main PROC
+    mov ecx, n ;ecx=6
+outerLoop: 
+    dec ecx ; ecx=5  ; ecx=4 ; ecx 3
+    mov esi, OFFSET arr  ; arr[15]; arr[1]=3; arr[1]
+    mov edi, esi ;arr[15]; edi[1]=esi[1], arr[0]=3
+    add edi, 1; edi[2]=3;  edi[2]=15;
+    mov ebx, ecx ; ebx=5; ebx=4;
+innerLoop:
+    mov al, [esi] ; al=15 ; al=3 ; al=15; al=22
+    mov dl, [edi] ; dl=3; bl=15; dl=22; dl=7
+    cmp al, dl ; 
+    jbe noSwap  
+    mov [esi], dl ;esi[1]=3  ; esi[3]=7
+    mov [edi], al ; edi[2]= 15 ; 3, 15, 22, 7,9, 12; edi[4]=22; 3,15,7,22
+noSwap:
+    inc esi ; 15 ; 22
+    inc edi ;22 ; 7
+    dec ebx ;ebx=3 ; ebx=2
+    jnz innerLoop ;
+    cmp ecx, 1 ;ecx==4
+    jne outerLoop
+
+    mov esi, OFFSET arr
+    mov ecx, n
+printLoop:
+    movzx eax, BYTE PTR [esi]
+    call WriteInt
+    call Crlf
+    inc esi
+    loop printLoop
+
+    exit
+main ENDP
+END main

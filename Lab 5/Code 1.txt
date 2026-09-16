@@ -1,0 +1,51 @@
+INCLUDE Irvine32.inc
+.data
+    arr1 BYTE 15, 3, 22, 7, 9, 12, 98
+
+.code
+main PROC
+    mov eax, 0
+
+    mov esi, OFFSET arr1
+    mov edi, esi
+    inc edi; *edi=3
+    mov al, [esi] ; 15
+    xchg [edi], al;edi=15,al=3
+    mov [esi], al; esi=3, al=3, [edi] 15
+
+    mov esi, OFFSET arr1+1; esi[3]
+    mov edi, OFFSET arr1+3; edi[7]
+    mov al, [esi]; al=3
+    xchg [edi], al; al=7, edi=3
+    mov [esi], al; esi[7]                                                              
+
+    mov esi, OFFSET arr1+2; esi[22]
+    mov edi, OFFSET arr1+4;edi[9]
+    mov al, [esi]; al=22
+    xchg [edi], al; al=9, ,edi=22
+    mov [esi], al; esi[9]
+
+    mov esi, OFFSET arr1+3 ; esi[7]
+    mov edi, OFFSET arr1+5 ; edi[12]
+    mov al, [esi]; al=7
+    xchg [edi], al; edi[7], al=12
+    mov [esi], al; esi[12]
+
+    mov esi, OFFSET arr1+4; esi[9]
+    mov edi, OFFSET arr1+5; edi[12]
+    mov al, [esi]; al=9
+    xchg [edi], al; al=12, edi[9]
+    mov [esi], al; esi=12
+
+    mov ecx, 7; ecx=6
+    mov esi, OFFSET arr1                                 ;arr1 BYTE 15, 3, 22, 7, 9, 12
+l1:
+    mov al, [esi] ; al=15
+    call writedec 
+    call crlf
+    inc esi
+    loop l1
+
+    exit
+    main endp
+    end main
