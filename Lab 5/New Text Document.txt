@@ -1,0 +1,42 @@
+INCLUDE Irvine32.inc
+
+.code
+main PROC
+    mov eax, 0          
+    mov ecx, 10         
+
+L1:
+    add eax, 2           
+    call WriteDec      
+    call Crlf          
+    loop L1             
+
+    exit
+main ENDP
+END main
+
+INCLUDE Irvine32.inc
+.data
+m byte " ", 0
+.code
+main PROC
+    mov eax, 0          
+    mov ecx, 4         
+L1:
+  mov ebx, ecx
+  mov edx, offset m
+      inc eax
+      mov ecx, eax
+          L2:
+          Call WriteString
+          Call WriteDec
+
+          Loop L2
+
+          Call Crlf
+          mov ecx, ebx
+    loop L1             
+
+    exit
+main ENDP
+END main
