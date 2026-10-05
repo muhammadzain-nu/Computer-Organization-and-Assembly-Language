@@ -1,0 +1,22 @@
+INCLUDE Irvine32.inc
+
+.data
+    numbers DWORD 10, 20, 30, 40, 50
+
+.code
+main PROC
+    mov ecx, LENGTHOF numbers
+    mov esi, 0
+
+PrintLoop:
+    mov eax, numbers[esi]
+    call WriteDec
+    mov al, ' '
+    call WriteChar
+    add esi, TYPE numbers
+    loop PrintLoop
+
+    call Crlf
+    exit
+main ENDP
+END main

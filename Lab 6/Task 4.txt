@@ -1,0 +1,20 @@
+INCLUDE Irvine32.inc
+
+.data
+
+.code
+main PROC
+    mov ecx, 10
+    mov eax, 0
+
+MultipleLoop:
+    add eax, 5
+    call WriteDec
+    mov al, ' '
+    call WriteChar
+    loop MultipleLoop
+
+    call Crlf
+    exit
+main ENDP
+END main

@@ -1,0 +1,27 @@
+INCLUDE Irvine32.inc
+
+.data
+    Source BYTE "COAL Lab Assignment", 0
+    Target BYTE SIZEOF Source DUP(?)
+
+.code
+main PROC
+    mov ecx, LENGTHOF Source
+    mov esi, 0
+CopyLoop:
+    mov al, Source[esi]
+    mov Target[esi], al
+    inc esi
+    loop CopyLoop
+
+    mov edx, OFFSET Source
+    call WriteString
+    call Crlf
+
+    mov edx, OFFSET Target
+    call WriteString
+    call Crlf
+
+    exit
+main ENDP
+END main

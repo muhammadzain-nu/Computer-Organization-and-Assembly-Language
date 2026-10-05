@@ -1,0 +1,19 @@
+INCLUDE Irvine32.inc
+
+.data
+
+.code
+main PROC
+    mov ecx, 10
+
+CountdownLoop:
+    mov eax, ecx
+    call WriteDec
+    mov al, ' '
+    call WriteChar
+    loop CountdownLoop
+
+    call Crlf
+    exit
+main ENDP
+END main
