@@ -1,0 +1,308 @@
+Task 1:
+INCLUDE Irvine32.inc
+
+.data
+    src WORD 10, 20, 30, 40, 50, 60, 70, 80, 90, 100
+    dest WORD 10 DUP(0)
+
+.code
+main PROC
+    mov esi, OFFSET src
+    mov ecx, 10
+push_loop:
+    movzx eax, WORD PTR [esi]
+    push eax
+    add esi, 2
+    loop push_loop
+
+    mov edi, OFFSET dest
+    mov ecx, 10
+pop_loop:
+    pop eax
+    mov [edi], ax
+    add edi, 2
+    loop pop_loop
+
+    exit
+main ENDP
+END main
+----------------------------
+Task 2:
+----------------------------
+Include Irvine32.inc
+.data
+val1 sdword 101
+val2 sdword -102
+val3 sdword 11
+msg1 BYTE "The Sum is: "
+.code
+main proc
+mov eax, 0
+mov eax, val1
+push eax
+mov eax, val2
+push eax
+mov eax, val3
+push eax
+pop ebx
+pop eax
+add eax, ebx
+pop ebx
+add eax, ebx
+mov edx, offset msg1
+call WriteString
+call WriteInt
+exit
+main endp
+
+end main
+-------------------
+Task 3
+-------------------
+INCLUDE Irvine32.inc
+
+.data
+    arr1 DWORD 10, 20, 30, 40, 50
+    arr2 DWORD 5, 15, 25, 35, 45
+    msg BYTE "Total Sum of both arrays: ", 0
+
+.code
+main PROC
+    call Proc3
+    mov edx, OFFSET msg
+    call WriteString
+    call WriteDec
+    call Crlf
+    exit
+main ENDP
+
+Proc1 PROC
+    mov esi, OFFSET arr1
+    mov ecx, 5
+    mov eax, 0
+L1:
+    add eax, [esi]
+    add esi, 4
+    loop L1
+    ret
+Proc1 ENDP
+
+Proc2 PROC
+    call Proc1
+    mov ebx, eax
+    mov esi, OFFSET arr2
+    mov ecx, 5
+    mov eax, 0
+L2:
+    add eax, [esi]
+    add esi, 4
+    loop L2
+    ret
+Proc2 ENDP
+
+Proc3 PROC
+    call Proc2
+    add eax, ebx
+    ret
+Proc3 ENDP
+
+END main
+------------------
+Task 4:
+------------------
+Include Irvine32.inc
+.data
+star BYTE "* ", 0
+.code 
+main PROC
+mov edx, offset star
+mov ebx, 1
+mov ecx, 1
+call Print
+call Print
+call Print
+call Print
+call Print
+exit
+main endp
+Print PROC
+L1:
+call WriteString
+Loop L1
+call crlf
+inc ebx
+mov ecx, ebx
+ret
+Print endp
+end main
+
+Task 5:
+
+Include Irvine32.inc
+.data
+n sdword ?
+sum2 SdWord ?
+msg BYTE " Enter NUmber of Elements: ", 0
+msg1 BYTE "Enter Elements", 0
+msg2 BYTE "The SUM IS: "
+.code
+main proc
+mov eax, 0
+mov edx, offset msg
+call WriteString
+call ReadInt
+mov n, eax
+mov ecx, eax
+mov edx, offset msg1
+call WriteString
+
+call sum1
+mov eax, sum2
+mov edx, offset msg2
+call WriteString
+call WriteInt 
+exit
+main endp
+sum1 proc
+L1:
+call readint
+add sum2, eax
+Loop L1
+ret
+sum1 endp
+end main
+-----------
+Task 6
+-----------
+INCLUDE Irvine32.inc
+
+.data
+    msgHeader BYTE "Code Review Evaluation by Zain", 0Dh, 0Ah, 0
+    prompt1   BYTE "Enter score for Code Quality: ", 0
+    prompt2   BYTE "Enter score for Documentation: ", 0
+    prompt3   BYTE "Enter score for Testing: ", 0
+    msgResult BYTE "Total Review Points: ", 0
+
+.code
+main PROC
+    mov edx, OFFSET msgHeader
+    call WriteString
+    call Crlf
+
+    mov edx, OFFSET prompt1
+    call WriteString
+    call ReadInt
+    push eax
+
+    mov edx, OFFSET prompt2
+    call WriteString
+    call ReadInt
+    push eax
+
+    mov edx, OFFSET prompt3
+    call WriteString
+    call ReadInt
+    push eax
+
+    call CalculateTotal
+
+    mov edx, OFFSET msgResult
+    call WriteString
+    call WriteDec
+    call Crlf
+
+    exit
+main ENDP
+
+CalculateTotal PROC
+    pop edx
+    pop eax
+    pop ebx
+    call AddThirdScore
+    push edx
+    ret
+CalculateTotal ENDP
+
+AddThirdScore PROC
+    pop ecx
+    pop esi
+    add eax, ebx
+    add eax, esi
+    push ecx
+    ret
+AddThirdScore ENDP
+
+END main
+---------------
+Task 7
+-----------------
+INCLUDE Irvine32.inc
+
+.data
+    p1Prompt BYTE "Enter lines of code by Usama: ", 0
+    p2Prompt BYTE "Enter lines of code by Zain: ", 0
+    p3Prompt BYTE "Enter lines of code by Hamza Jutt: ", 0
+    
+    p1Name BYTE "Usama", 0
+    p2Name BYTE "Zain - The Logic Legend", 0
+    p3Name BYTE "Hamza Jutt", 0
+    
+    resultMsg BYTE "IEEE Xtreme Code Champion: ", 0
+
+.code
+main PROC
+    mov edx, OFFSET p1Prompt
+    call WriteString
+    call ReadInt
+    push eax
+
+    mov edx, OFFSET p2Prompt
+    call WriteString
+    call ReadInt
+    push eax
+
+    mov edx, OFFSET p3Prompt
+    call WriteString
+    call ReadInt
+    push eax
+
+    call FindChampion
+
+    mov edx, OFFSET resultMsg
+    call WriteString
+    mov edx, eax
+    call WriteString
+    call Crlf
+
+    exit
+main ENDP
+
+FindChampion PROC
+    pop edi
+    pop ecx
+    pop ebx
+    pop eax
+    push edi
+
+    push OFFSET p1Name
+    mov edx, eax
+
+    cmp ebx, edx
+    jle check_p3
+    mov edx, ebx
+    pop edi
+    push OFFSET p2Name
+
+check_p3:
+    cmp ecx, edx
+    jle done
+    mov edx, ecx
+    pop edi
+    push OFFSET p3Name
+
+done:
+    pop eax
+    ret
+FindChampion ENDP
+
+END main
