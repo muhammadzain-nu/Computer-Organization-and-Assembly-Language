@@ -1,0 +1,217 @@
+Include irvine32.inc
+.data
+msg1 byte "Loope example: ", 0
+msg2 byte "Loopne Example: ", 0
+.code
+main PROC
+mov edx, offset msg1
+call writeString
+call crlf
+mov ecx, 5
+mov eax, 10
+L1:
+call Writedec
+sub eax, 1
+cmp eax, 8
+loope L1
+call crlf
+mov edx, offset msg2
+call writeString
+call crlf
+mov ecx, 5
+mov eax, 1
+L2:
+call Writedec
+add eax, 1
+cmp eax, 4
+loopne L2
+call crlf
+exit
+call dumpRegs
+exit
+main endp
+end main
+
+Task:
+Include irvine32.inc
+.data
+msg1 byte "Equal ", 0
+msg2 byte "Greater ", 0
+msg3 byte "Less ", 0
+.code
+main PROC
+mov edx, offset msg1
+call writeString
+call crlf
+mov eax, 10
+cmp eax, 10
+je equalwala
+cmp eax, 10
+jg greaterwala
+cmp eax, 10
+jl lesswala
+
+
+
+equalwala:
+mov edx, offset msg1
+call writeString
+jmp exit1
+greaterwala:
+mov edx, offset msg2
+call writestring
+jmp exit1
+lesswala:
+mov edx, offset msg3
+call WriteString
+exit1:
+exit
+main endp
+end main
+TAsk:
+Include irvine32.inc
+.data
+msg1 byte "Eligible ", 0
+msg2 byte "Not eligible ", 0
+msg3 byte "Less ", 0
+.code
+main PROC
+mov eax, 17
+cmp eax, 18
+jge check1
+jmp print2
+check1:
+cmp eax, 30
+jle print
+jmp print2
+
+print:
+mov edx, offset msg1
+call WriteString
+jmp exit1
+print2:
+mov edx, offset msg2
+call Writestring
+exit1:
+
+exit
+main endp
+end main
+While loop Task 4:
+------------------------
+Include irvine32.inc
+.data
+arr WORD 10, 4, 7, 14, 299, 156, 3, 19, 29, 300, 20
+msg3 byte "Not Found", 0
+msg byte "Found!", 0
+.code
+main PROC
+mov eax, 0
+call readdec
+
+mov ebx, eax
+mov esi, offset arr
+
+mov ecx, 11
+mov eax, 0
+l1:
+cmp  bx, [arr+eax]
+je whileout
+add eax, 2
+
+Loop l1
+jmp exit1
+whileout:
+mov edx, offset msg
+call Writestring
+jmp exit2
+exit1:
+mov edx, offset msg3
+call Writestring
+exit2:
+exit
+main endp
+end main
+-------------------------
+task 8
+------------------------
+Include irvine32.inc
+.data
+arr SDWORD 5, -3, 0, 12, -8, 0, 7, -1, 9, 0
+positive dword ?
+negative dword ?
+zeros dword ?
+msg byte "Total Positive numbers: ", 0
+msg1 byte "Total negative numbers: ", 0
+msg2 byte "Total Zero Numbers: ", 0
+.code
+main PROC
+mov ecx, 10
+mov eax, 0
+L1:
+cmp [arr+eax], 0
+je countzeros
+cmp [arr+eax], 0
+jg countpositive
+cmp [arr+eax], 0
+jl countnegative
+countzeros:
+inc zeros
+jmp term
+countpositive:
+inc positive
+jmp term
+countnegative:
+inc negative
+
+term:
+add eax, 4
+Loop L1
+mov edx, offset msg
+mov eax, positive
+call writeString
+call WriteDec
+Call crlf
+mov edx, offset msg1
+mov eax, negative
+call writeString
+call WriteDec
+Call crlf
+mov edx, offset msg2
+mov eax, zeros
+call writeString
+call WriteDec
+Call crlf
+exit
+main endp
+end main
+Task 6:
+Include irvine32.inc
+.data
+char BYTE "g", 0
+
+msg byte "Alphabet!", 0
+msg2 byte "Not Alphabet!:(", 0
+.code
+main PROC
+mov al, char
+cmp al, 65
+jge check
+jmp exit1
+check:
+cmp al, 90
+jle print
+cmp al, 97
+jge check2
+jmp exit1
+check2:
+cmp al, 122
+jle print
+print:
+mov edx, offset msg
+call writeString
+exit1:
+exit
+main endp
+end main
+
